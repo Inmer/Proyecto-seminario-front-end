@@ -18,6 +18,7 @@ export default function SiderDemo() {
   const setKeyContent = (key) => {
     console.log(key);
     setcontent(key.key);
+    console.log(content);
   };
 
   return (
@@ -45,8 +46,8 @@ export default function SiderDemo() {
             className="site-layout-background"
             style={{ padding: 24, minHeight: 360 }}
           >
-            {content === 1 && <Clientes />}
-            {content === 2 && <Vehiculos />}
+            {content == 1 && <Clientes />}
+            {content == 2 && <Vehiculos />}
           </div>
         </Content>
         <Footer style={{ textAlign: "center" }}>
