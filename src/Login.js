@@ -81,7 +81,7 @@ export default function Login() {
               </Button>
             </Form.Item>
           </Form>
-          {fireRedirect && <Redirect to={"/"} />}
+          {fireRedirect && <Redirect to={"/home"} />}
         </Card>
       </Col>
     </Row>
