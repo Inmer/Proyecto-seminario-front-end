@@ -64,10 +64,6 @@ export default function Login() {
               <Form.Item name="remember" valuePropName="checked" noStyle>
                 <Checkbox>Recordarme</Checkbox>
               </Form.Item>
-
-              <a className="login-form-forgot" href="">
-                Recuperar contraseña
-              </a>
             </Form.Item>
 
             <Form.Item>

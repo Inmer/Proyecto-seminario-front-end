@@ -1,16 +1,10 @@
 import React, { useState } from "react";
-import { Layout, Menu, Breadcrumb, Table } from "antd";
-import {
-  DesktopOutlined,
-  PieChartOutlined,
-  FileOutlined,
-  TeamOutlined,
-  UserOutlined,
-} from "@ant-design/icons";
+import { Layout, Menu, Breadcrumb } from "antd";
+import { DesktopOutlined, PieChartOutlined } from "@ant-design/icons";
 import Clientes from "./Clientes";
+import Vehiculos from "./Vehiculos";
 
 const { Header, Content, Footer, Sider } = Layout;
-const { SubMenu } = Menu;
 
 export default function SiderDemo() {
   const [collapsed, setcollapsed] = useState(false);
@@ -39,7 +33,7 @@ export default function SiderDemo() {
             Clientes
           </Menu.Item>
           <Menu.Item key="2" icon={<DesktopOutlined />} onClick={setKeyContent}>
-            Option 2
+            Vehiculos
           </Menu.Item>
         </Menu>
       </Sider>
@@ -51,7 +45,8 @@ export default function SiderDemo() {
             className="site-layout-background"
             style={{ padding: 24, minHeight: 360 }}
           >
-            {content == 1 && <Clientes />}
+            {content === 1 && <Clientes />}
+            {content === 2 && <Vehiculos />}
           </div>
         </Content>
         <Footer style={{ textAlign: "center" }}>
