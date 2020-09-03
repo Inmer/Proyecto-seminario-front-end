@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Table, Button, Input, Form, Space } from "antd";
 import Modal from "antd/lib/modal/Modal";
 import { SearchOutlined } from "@ant-design/icons";
@@ -7,7 +7,6 @@ import Highlighter from "react-highlight-words";
 export default function Clientes() {
   const [form] = Form.useForm();
   const [visible, setvisible] = useState(false);
-  const [count, setcount] = useState(2);
   const [searchText, setsearchText] = useState("");
   const [searchedColumn, setsearchedColumn] = useState("");
   const handleSearch = (selectedKeys, confirm, dataIndex) => {
@@ -90,9 +89,9 @@ export default function Clientes() {
   });
   const columns = [
     {
-      title: "Código",
-      dataIndex: "key",
-      key: "key",
+      title: "DPI",
+      dataIndex: "dpi",
+      key: "dpi",
     },
     {
       title: "Nombre",
@@ -114,31 +113,66 @@ export default function Clientes() {
   ];
   const [dataSource, setdataSource] = useState([
     {
-      key: "1",
+      dpi: "1",
       nombre: "Juan",
       apellido: "Perez",
-      telefono: "5555-5555",
+      propietario: "N",
     },
     {
-      key: "2",
+      dpi: "2",
       nombre: "Mario",
       apellido: "Ramirez",
-      telefono: "5555-5555",
+      propietario: "N",
     },
   ]);
+
+  useEffect(() => {
+    fetch("http://taller-app-semi.herokuapp.com/clients")
+      .then((res) => res.json())
+      .then(
+        (result) => {
+          setdataSource(result);
+          console.log(result);
+        },
+        (error) => {
+          console.log(error);
+        }
+      );
+  }, []);
 
   const showModal = () => setvisible(true);
   const handleOk = () => form.submit();
 
   const onFinish = (values) => {
     console.log("Success:", values);
+    var myHeaders = new Headers();
+    myHeaders.append("Content-Type", "application/x-www-form-urlencoded");
+
+    var urlencoded = new URLSearchParams();
+    urlencoded.append("dpi", values.dpi);
+    urlencoded.append("nombre", values.nombre);
+    urlencoded.append("apellido", values.apellido);
+    urlencoded.append("propietario", "N");
+
     const newData = {
-      key: count,
+      dpi: values.dpi,
       nombre: values.nombre,
       apellido: values.apellido,
-      telefono: values.telefono,
+      propietario: "N",
     };
-    setcount(count + 1);
+
+    var requestOptions = {
+      method: "POST",
+      headers: myHeaders,
+      body: urlencoded,
+      redirect: "follow",
+    };
+
+    fetch("http://taller-app-semi.herokuapp.com/clients", requestOptions)
+      .then((response) => response.text())
+      .then((result) => console.log(result))
+      .catch((error) => console.log("error", error));
+
     setdataSource([...dataSource, newData]);
     setvisible(false);
   };
@@ -181,9 +215,9 @@ export default function Clientes() {
             <Input />
           </Form.Item>
           <Form.Item
-            name="telefono"
-            label="Teléfono"
-            rules={[{ required: true, message: "Por favor ingresa teléfono" }]}
+            name="dpi"
+            label="DPI"
+            rules={[{ required: true, message: "Por favor ingresa DPI" }]}
           >
             <Input />
           </Form.Item>

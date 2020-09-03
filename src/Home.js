@@ -4,7 +4,7 @@ import { DesktopOutlined, PieChartOutlined } from "@ant-design/icons";
 import Clientes from "./Clientes";
 import Vehiculos from "./Vehiculos";
 
-const { Header, Content, Footer, Sider } = Layout;
+const { Header, Content, Sider } = Layout;
 
 export default function SiderDemo() {
   const [collapsed, setcollapsed] = useState(false);
@@ -50,9 +50,6 @@ export default function SiderDemo() {
             {content == 2 && <Vehiculos />}
           </div>
         </Content>
-        <Footer style={{ textAlign: "center" }}>
-          Ant Design ©2018 Created by Ant UED
-        </Footer>
       </Layout>
     </Layout>
   );
