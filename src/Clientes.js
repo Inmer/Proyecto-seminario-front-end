@@ -1,10 +1,15 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import { Table, Button, Input, Form, Space } from "antd";
 import Modal from "antd/lib/modal/Modal";
 import { SearchOutlined } from "@ant-design/icons";
 import Highlighter from "react-highlight-words";
+import { ClientesContext } from "./context";
 
 export default function Clientes() {
+  //Se usa context para poder pasar estados entre componentes
+  const { setClienteSeleccionado, setListaVehiculos } = useContext(
+    ClientesContext
+  );
   const [form] = Form.useForm();
   const [visible, setvisible] = useState(false);
   const [searchText, setsearchText] = useState("");
@@ -87,11 +92,13 @@ export default function Clientes() {
         text
       ),
   });
+  //Columnas a mostrar en la tabla
   const columns = [
     {
       title: "DPI",
       dataIndex: "dpi",
       key: "dpi",
+      ...getColumnSearchProps("dpi"),
     },
     {
       title: "Nombre",
@@ -105,26 +112,8 @@ export default function Clientes() {
       key: "apellido",
       ...getColumnSearchProps("apellido"),
     },
-    {
-      title: "Teléfono",
-      dataIndex: "telefono",
-      key: "telefono",
-    },
   ];
-  const [dataSource, setdataSource] = useState([
-    {
-      dpi: "1",
-      nombre: "Juan",
-      apellido: "Perez",
-      propietario: "N",
-    },
-    {
-      dpi: "2",
-      nombre: "Mario",
-      apellido: "Ramirez",
-      propietario: "N",
-    },
-  ]);
+  const [dataSource, setdataSource] = useState([]);
 
   useEffect(() => {
     fetch("http://taller-app-semi.herokuapp.com/clients")
@@ -187,6 +176,28 @@ export default function Clientes() {
     wrapperCol: { span: 16 },
   };
 
+  // rowSelection object indicates the need for row selection
+  const rowSelection = {
+    onChange: (selectedRowKeys, selectedRows) => {
+      setClienteSeleccionado(selectedRows[0]);
+      console.log(
+        `selectedRowKeys: ${selectedRowKeys}`,
+        "selectedRows: ",
+        selectedRows[0]
+      );
+      fetch("http://taller-app-semi.herokuapp.com/clients/" + selectedRowKeys)
+        .then((res) => res.json())
+        .then(
+          (result) => {
+            setListaVehiculos(result.vehiculos);
+          },
+          (error) => {
+            console.log(error);
+          }
+        );
+    },
+  };
+
   return (
     <div>
       <Button type="primary" style={{ marginBottom: 16 }} onClick={showModal}>
@@ -217,13 +228,24 @@ export default function Clientes() {
           <Form.Item
             name="dpi"
             label="DPI"
-            rules={[{ required: true, message: "Por favor ingresa DPI" }]}
+            rules={[
+              { required: true, message: "Por favor ingresa DPI" },
+              { len: 13, message: "El DPI debe ser de 13 digitos" },
+            ]}
           >
             <Input />
           </Form.Item>
         </Form>
       </Modal>
-      <Table dataSource={dataSource} columns={columns} />
+      <Table
+        rowSelection={{
+          type: "radio",
+          ...rowSelection,
+        }}
+        rowKey={(dataSource) => dataSource.dpi}
+        dataSource={dataSource}
+        columns={columns}
+      />
     </div>
   );
 }

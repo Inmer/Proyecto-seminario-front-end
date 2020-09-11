@@ -1,13 +1,17 @@
-import React, { useState } from "react";
-import { Table, Button, Input, Form, Space } from "antd";
+import React, { useState, useContext } from "react";
+import { Table, Button, Input, Form, Space, message } from "antd";
 import Modal from "antd/lib/modal/Modal";
 import { SearchOutlined } from "@ant-design/icons";
 import Highlighter from "react-highlight-words";
+import { ClientesContext } from "./context";
 
 export default function Vehiculos() {
+  //Se usa context para poder pasar estados entre componentes
+  const { clienteSeleccionado, listaVehiculos, setListaVehiculos } = useContext(
+    ClientesContext
+  );
   const [form] = Form.useForm();
   const [visible, setvisible] = useState(false);
-  const [count, setcount] = useState(2);
   const [searchText, setsearchText] = useState("");
   const [searchedColumn, setsearchedColumn] = useState("");
   const handleSearch = (selectedKeys, confirm, dataIndex) => {
@@ -90,66 +94,100 @@ export default function Vehiculos() {
   });
   const columns = [
     {
-      title: "Código",
-      dataIndex: "key",
-      key: "key",
+      title: "Tipo placa",
+      dataIndex: "tipo_placa",
+      key: "tipo_placa",
     },
     {
-      title: "Nombre",
-      dataIndex: "nombre",
-      key: "nombre",
-      ...getColumnSearchProps("nombre"),
+      title: "Número de placa",
+      dataIndex: "numero_placa",
+      key: "numero_placa",
+      ...getColumnSearchProps("marca"),
     },
     {
-      title: "Apellido",
-      dataIndex: "apellido",
-      key: "apellido",
-      ...getColumnSearchProps("apellido"),
+      title: "Marca",
+      dataIndex: "marca",
+      key: "marca",
+      ...getColumnSearchProps("marca"),
     },
     {
-      title: "Teléfono",
-      dataIndex: "telefono",
-      key: "telefono",
+      title: "Modelo",
+      dataIndex: "modelo",
+      key: "modelo",
+      ...getColumnSearchProps("modelo"),
+    },
+    {
+      title: "Año",
+      dataIndex: "año",
+      key: "año",
+    },
+    {
+      title: "Recorrido",
+      dataIndex: "recorrido",
+      key: "recorrido",
     },
   ];
-  const [dataSource, setdataSource] = useState([
-    {
-      key: "1",
-      nombre: "Juan",
-      apellido: "Perez",
-      telefono: "5555-5555",
-    },
-    {
-      key: "2",
-      nombre: "Mario",
-      apellido: "Ramirez",
-      telefono: "5555-5555",
-    },
-  ]);
 
-  const showModal = () => setvisible(true);
+  const showModal = () => {
+    if (!clienteSeleccionado.hasOwnProperty("dpi")) {
+      message.error("Debe seleccionar un cliente para asignar vehiculo");
+    } else {
+      setvisible(true);
+    }
+  };
   const handleOk = () => form.submit();
 
   const onFinish = (values) => {
     console.log("Success:", values);
+    var myHeaders = new Headers();
+    myHeaders.append("Content-Type", "application/x-www-form-urlencoded");
+
+    var urlencoded = new URLSearchParams();
+    urlencoded.append("dpi", clienteSeleccionado.dpi);
+    urlencoded.append("placa", values.numero_placa);
+    urlencoded.append("tipo_placa", values.tipo_placa);
+    urlencoded.append("año", values.año);
+    urlencoded.append("marca", values.marca);
+    urlencoded.append("modelo", values.modelo);
+    urlencoded.append("recorrido", values.recorrido);
+
     const newData = {
-      key: count,
-      nombre: values.nombre,
-      apellido: values.apellido,
-      telefono: values.telefono,
+      dpi: clienteSeleccionado.dpi,
+      numero_placa: values.numero_placa,
+      tipo_placa: values.tipo_placa,
+      año: values.año,
+      marca: values.marca,
+      modelo: values.modelo,
+      recorrido: values.recorrido,
     };
-    setcount(count + 1);
-    setdataSource([...dataSource, newData]);
+
+    console.log("urlencoded:", urlencoded);
+
+    var requestOptions = {
+      method: "POST",
+      headers: myHeaders,
+      body: urlencoded,
+      redirect: "follow",
+    };
+
+    fetch("http://taller-app-semi.herokuapp.com/vehicules", requestOptions)
+      .then((response) => response.text())
+      .then((result) => console.log(result))
+      .catch((error) => console.log("error", error));
+
+    setListaVehiculos([...listaVehiculos, newData]);
     setvisible(false);
   };
 
   const handleCancel = (e) => {
     console.log(e);
     setvisible(false);
+    console.log("clienteSeleccionado: " + JSON.stringify(clienteSeleccionado));
+    console.log("listaVehiculos: " + JSON.stringify(listaVehiculos));
   };
 
   const layout = {
-    labelCol: { span: 5 },
+    labelCol: { span: 7 },
     wrapperCol: { span: 16 },
   };
 
@@ -166,30 +204,26 @@ export default function Vehiculos() {
         okButtonProps={{ htmlType: "submit" }}
       >
         <Form {...layout} name="form_cliente" form={form} onFinish={onFinish}>
-          <Form.Item
-            name="nombre"
-            label="Nombre"
-            rules={[{ required: true, message: "Por favor ingresa nombre" }]}
-          >
-            <Input />
-          </Form.Item>
-          <Form.Item
-            name="apellido"
-            label="Apellido"
-            rules={[{ required: true, message: "Por favor ingresa apellido" }]}
-          >
-            <Input />
-          </Form.Item>
-          <Form.Item
-            name="telefono"
-            label="Teléfono"
-            rules={[{ required: true, message: "Por favor ingresa teléfono" }]}
-          >
-            <Input />
-          </Form.Item>
+          {columns.map(function (e) {
+            return (
+              <Form.Item
+                name={e.dataIndex}
+                label={e.title}
+                rules={[
+                  { required: true, message: "Por favor ingresa " + e.title },
+                ]}
+              >
+                <Input />
+              </Form.Item>
+            );
+          })}
         </Form>
       </Modal>
-      <Table dataSource={dataSource} columns={columns} />
+      <Table
+        dataSource={listaVehiculos}
+        columns={columns}
+        rowKey={(listaVehiculos) => listaVehiculos.numero_placa}
+      />
     </div>
   );
 }

@@ -1,8 +1,9 @@
 import React, { useState } from "react";
 import { Layout, Menu, Breadcrumb } from "antd";
-import { DesktopOutlined, PieChartOutlined } from "@ant-design/icons";
+import { UserOutlined } from "@ant-design/icons";
 import Clientes from "./Clientes";
 import Vehiculos from "./Vehiculos";
+import { ClientesContextProvider } from "./context";
 
 const { Header, Content, Sider } = Layout;
 
@@ -26,16 +27,12 @@ export default function SiderDemo() {
       <Sider collapsible collapsed={collapsed} onCollapse={onCollapse}>
         <div className="logo" />
         <Menu theme="dark" defaultSelectedKeys={["1"]} mode="inline">
-          <Menu.Item
-            key="1"
-            icon={<PieChartOutlined />}
-            onClick={setKeyContent}
-          >
+          <Menu.Item key="1" icon={<UserOutlined />} onClick={setKeyContent}>
             Clientes
           </Menu.Item>
-          <Menu.Item key="2" icon={<DesktopOutlined />} onClick={setKeyContent}>
+          {/* <Menu.Item key="2" icon={<CarOutlined />} onClick={setKeyContent}>
             Vehiculos
-          </Menu.Item>
+          </Menu.Item> */}
         </Menu>
       </Sider>
       <Layout className="site-layout">
@@ -46,7 +43,13 @@ export default function SiderDemo() {
             className="site-layout-background"
             style={{ padding: 24, minHeight: 360 }}
           >
-            {content == 1 && <Clientes />}
+            {content == 1 && (
+              <ClientesContextProvider>
+                <Clientes />
+                <Vehiculos />
+              </ClientesContextProvider>
+            )}
+
             {content == 2 && <Vehiculos />}
           </div>
         </Content>
