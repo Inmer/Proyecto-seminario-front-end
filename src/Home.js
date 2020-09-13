@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { Layout, Menu, Breadcrumb } from "antd";
-import { UserOutlined } from "@ant-design/icons";
+import { UserOutlined, CarOutlined } from "@ant-design/icons";
 import Clientes from "./Clientes";
 import Vehiculos from "./Vehiculos";
 import { ClientesContextProvider } from "./context";
@@ -28,29 +28,38 @@ export default function SiderDemo() {
         <div className="logo" />
         <Menu theme="dark" defaultSelectedKeys={["1"]} mode="inline">
           <Menu.Item key="1" icon={<UserOutlined />} onClick={setKeyContent}>
-            Clientes
+            Clientes/Vehiculos
           </Menu.Item>
-          {/* <Menu.Item key="2" icon={<CarOutlined />} onClick={setKeyContent}>
-            Vehiculos
-          </Menu.Item> */}
         </Menu>
       </Sider>
       <Layout className="site-layout">
-        <Header className="site-layout-background" style={{ padding: 0 }} />
+        {/* <Header className="site-layout-background" style={{ padding: 0 }} /> */}
         <Content style={{ margin: "0 16px" }}>
           <Breadcrumb style={{ margin: "16px 0" }}></Breadcrumb>
           <div
             className="site-layout-background"
             style={{ padding: 24, minHeight: 360 }}
           >
+            {/* original con elementos de react
             {content == 1 && (
               <ClientesContextProvider>
                 <Clientes />
                 <Vehiculos />
               </ClientesContextProvider>
-            )}
+            )} */}
 
-            {content == 2 && <Vehiculos />}
+            {content == 1 && (
+              <iframe
+                style={{
+                  border: "none",
+                  width: "100%",
+                  height: 630,
+                  overflow: "hidden",
+                }}
+                scrolling="no"
+                src="https://seminario.retool.com/embedded/public/f47342af-5c18-4013-a54d-0e4b3f55837b"
+              ></iframe>
+            )}
           </div>
         </Content>
       </Layout>
