@@ -30,6 +30,9 @@ export default function SiderDemo() {
           <Menu.Item key="1" icon={<UserOutlined />} onClick={setKeyContent}>
             Clientes/Vehiculos
           </Menu.Item>
+          <Menu.Item key="2" icon={<CarOutlined />} onClick={setKeyContent}>
+            Recepción Vehiculos
+          </Menu.Item>
         </Menu>
       </Sider>
       <Layout className="site-layout">
@@ -58,6 +61,18 @@ export default function SiderDemo() {
                 }}
                 scrolling="no"
                 src="https://seminario.retool.com/embedded/public/f47342af-5c18-4013-a54d-0e4b3f55837b"
+              ></iframe>
+            )}
+            {content == 2 && (
+              <iframe
+                style={{
+                  border: "none",
+                  width: "100%",
+                  height: 1000,
+                  overflow: "hidden",
+                }}
+                scrolling="no"
+                src="https://taller.retool.com/embedded/public/dafdcf4e-227e-41c1-b2a7-a37166dc1798 "
               ></iframe>
             )}
           </div>
