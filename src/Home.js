@@ -5,6 +5,7 @@ import {
   CarOutlined,
   HistoryOutlined,
   RollbackOutlined,
+  BuildOutlined,
 } from "@ant-design/icons";
 import Clientes from "./Clientes";
 import Vehiculos from "./Vehiculos";
@@ -47,6 +48,9 @@ export default function SiderDemo() {
             onClick={setKeyContent}
           >
             Próximos servicios
+          </Menu.Item>
+          <Menu.Item key="5" icon={<BuildOutlined />} onClick={setKeyContent}>
+            Catalogo tipo servicios
           </Menu.Item>
         </Menu>
       </Sider>
@@ -113,6 +117,18 @@ export default function SiderDemo() {
                 }}
                 scrolling="no"
                 src="https://seminario.retool.com/embedded/public/a754480e-bf69-4133-9998-a61f8623e728"
+              ></iframe>
+            )}
+            {content == 5 && (
+              <iframe
+                style={{
+                  border: "none",
+                  width: "100%",
+                  height: 450,
+                  overflow: "hidden",
+                }}
+                scrolling="no"
+                src="https://pruebaw.retool.com/embedded/public/cd6788c9-5bcf-4eb9-8f90-03df864b03dc"
               ></iframe>
             )}
           </div>
