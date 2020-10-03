@@ -6,6 +6,7 @@ import {
   HistoryOutlined,
   RollbackOutlined,
   BuildOutlined,
+  SubnodeOutlined,
 } from "@ant-design/icons";
 import Clientes from "./Clientes";
 import Vehiculos from "./Vehiculos";
@@ -33,12 +34,13 @@ export default function SiderDemo() {
       <Sider collapsible collapsed={collapsed} onCollapse={onCollapse}>
         <div className="logo" />
         <Menu theme="dark" defaultSelectedKeys={["1"]} mode="inline">
-          <Menu.Item key="1" icon={<UserOutlined />} onClick={setKeyContent}>
-            Clientes/Vehiculos
-          </Menu.Item>
-          <Menu.Item key="2" icon={<CarOutlined />} onClick={setKeyContent}>
+          <Menu.Item key="1" icon={<CarOutlined />} onClick={setKeyContent}>
             Recepción Vehiculos
           </Menu.Item>
+          <Menu.Item key="2" icon={<UserOutlined />} onClick={setKeyContent}>
+            Clientes/Vehiculos
+          </Menu.Item>
+
           <Menu.Item key="3" icon={<HistoryOutlined />} onClick={setKeyContent}>
             Histórico servicios
           </Menu.Item>
@@ -51,6 +53,9 @@ export default function SiderDemo() {
           </Menu.Item>
           <Menu.Item key="5" icon={<BuildOutlined />} onClick={setKeyContent}>
             Catalogo tipo servicios
+          </Menu.Item>
+          <Menu.Item key="6" icon={<SubnodeOutlined />} onClick={setKeyContent}>
+            Cotizaciones
           </Menu.Item>
         </Menu>
       </Sider>
@@ -75,18 +80,6 @@ export default function SiderDemo() {
                 style={{
                   border: "none",
                   width: "100%",
-                  height: 630,
-                  overflow: "hidden",
-                }}
-                scrolling="no"
-                src="https://seminario.retool.com/embedded/public/f47342af-5c18-4013-a54d-0e4b3f55837b"
-              ></iframe>
-            )}
-            {content == 2 && (
-              <iframe
-                style={{
-                  border: "none",
-                  width: "100%",
                   height: 950,
                   overflow: "hidden",
                 }}
@@ -94,7 +87,18 @@ export default function SiderDemo() {
                 src="https://taller.retool.com/embedded/public/dafdcf4e-227e-41c1-b2a7-a37166dc1798 "
               ></iframe>
             )}
-
+            {content == 2 && (
+              <iframe
+                style={{
+                  border: "none",
+                  width: "100%",
+                  height: 630,
+                  overflow: "hidden",
+                }}
+                scrolling="no"
+                src="https://seminario.retool.com/embedded/public/f47342af-5c18-4013-a54d-0e4b3f55837b"
+              ></iframe>
+            )}
             {content == 3 && (
               <iframe
                 style={{
@@ -129,6 +133,18 @@ export default function SiderDemo() {
                 }}
                 scrolling="no"
                 src="https://pruebaw.retool.com/embedded/public/cd6788c9-5bcf-4eb9-8f90-03df864b03dc"
+              ></iframe>
+            )}
+            {content == 6 && (
+              <iframe
+                style={{
+                  border: "none",
+                  width: "100%",
+                  height: 650,
+                  overflow: "hidden",
+                }}
+                scrolling="no"
+                src="https://test123451.retool.com/embedded/public/87f56198-02c7-4129-80bf-8549a06e0bfa"
               ></iframe>
             )}
           </div>
