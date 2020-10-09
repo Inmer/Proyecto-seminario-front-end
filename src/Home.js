@@ -8,6 +8,7 @@ import {
   BuildOutlined,
   SubnodeOutlined,
   FullscreenExitOutlined,
+  ContainerOutlined,
 } from "@ant-design/icons";
 import Clientes from "./Clientes";
 import Vehiculos from "./Vehiculos";
@@ -64,6 +65,13 @@ export default function SiderDemo() {
             onClick={setKeyContent}
           >
             Vehiculos en taller
+          </Menu.Item>
+          <Menu.Item
+            key="8"
+            icon={<ContainerOutlined />}
+            onClick={setKeyContent}
+          >
+            Contactos
           </Menu.Item>
         </Menu>
       </Sider>
@@ -165,6 +173,18 @@ export default function SiderDemo() {
                 }}
                 scrolling="no"
                 src="https://test123451.retool.com/embedded/public/353dbb73-5835-485c-bd33-e1eaaa9186b3"
+              ></iframe>
+            )}
+            {content == 8 && (
+              <iframe
+                style={{
+                  border: "none",
+                  width: "100%",
+                  height: 800,
+                  overflow: "hidden",
+                }}
+                scrolling="no"
+                src="https://test123451.retool.com/embedded/public/a3bcdfbb-2054-4ec5-9fce-a8adcd18e042"
               ></iframe>
             )}
           </div>
