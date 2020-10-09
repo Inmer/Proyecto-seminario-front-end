@@ -7,6 +7,7 @@ import {
   RollbackOutlined,
   BuildOutlined,
   SubnodeOutlined,
+  FullscreenExitOutlined,
 } from "@ant-design/icons";
 import Clientes from "./Clientes";
 import Vehiculos from "./Vehiculos";
@@ -56,6 +57,13 @@ export default function SiderDemo() {
           </Menu.Item>
           <Menu.Item key="6" icon={<SubnodeOutlined />} onClick={setKeyContent}>
             Cotizaciones
+          </Menu.Item>
+          <Menu.Item
+            key="7"
+            icon={<FullscreenExitOutlined />}
+            onClick={setKeyContent}
+          >
+            Vehiculos en taller
           </Menu.Item>
         </Menu>
       </Sider>
@@ -145,6 +153,18 @@ export default function SiderDemo() {
                 }}
                 scrolling="no"
                 src="https://test123451.retool.com/embedded/public/87f56198-02c7-4129-80bf-8549a06e0bfa"
+              ></iframe>
+            )}
+            {content == 7 && (
+              <iframe
+                style={{
+                  border: "none",
+                  width: "100%",
+                  height: 450,
+                  overflow: "hidden",
+                }}
+                scrolling="no"
+                src="https://test123451.retool.com/embedded/public/353dbb73-5835-485c-bd33-e1eaaa9186b3"
               ></iframe>
             )}
           </div>
