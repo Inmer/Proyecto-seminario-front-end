@@ -199,7 +199,7 @@ export default function SiderDemo() {
                   overflow: "hidden",
                 }}
                 scrolling="no"
-                src="https://seminario1.retool.com/embedded/public/8c60335e-1209-4998-8148-b6fc6e174a6a"
+                src="https://seminario1.retool.com/embedded/public/1746b1dd-aab8-4f49-aa48-bd369becd84d"
               ></iframe>
             )}
           </div>
