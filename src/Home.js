@@ -73,6 +73,9 @@ export default function SiderDemo() {
           >
             Contactos
           </Menu.Item>
+          <Menu.Item key="9" icon={<BuildOutlined />} onClick={setKeyContent}>
+            Catalogo tipo observaciones
+          </Menu.Item>
         </Menu>
       </Sider>
       <Layout className="site-layout">
@@ -96,7 +99,7 @@ export default function SiderDemo() {
                 style={{
                   border: "none",
                   width: "100%",
-                  height: 950,
+                  height: 1200,
                   overflow: "hidden",
                 }}
                 scrolling="no"
@@ -185,6 +188,18 @@ export default function SiderDemo() {
                 }}
                 scrolling="no"
                 src="https://test123451.retool.com/embedded/public/a3bcdfbb-2054-4ec5-9fce-a8adcd18e042"
+              ></iframe>
+            )}
+            {content == 9 && (
+              <iframe
+                style={{
+                  border: "none",
+                  width: "100%",
+                  height: 600,
+                  overflow: "hidden",
+                }}
+                scrolling="no"
+                src="https://seminario1.retool.com/embedded/public/8c60335e-1209-4998-8148-b6fc6e174a6a"
               ></iframe>
             )}
           </div>
